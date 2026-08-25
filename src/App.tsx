@@ -46,7 +46,7 @@ const experiments = [
   },
 ];
 
-export default function Home() {
+export default function App() {
   return (
     <main>
       <header className="site-header">
