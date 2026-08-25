@@ -31,22 +31,34 @@ const featuredWork = [
   },
 ];
 
-const experiments = [
+const projects = [
   {
-    title: 'DINQ',
-    label: 'Product research',
-    text: 'A dynamic professional identity layer built around evidence of work—not just static credentials.',
+    title: 'AI Training Suit',
+    label: 'Wearable AI · Product prototype',
+    text: 'A wearable movement-guidance concept combining body sensors, AI motion recognition and real-time voice or haptic correction.',
+    image: '/images/ai-training-suit.jpg',
+  },
+  {
+    title: 'TOS',
+    label: 'Personal system · Local-first',
+    text: 'A personal operating system for weekly strategy, Today Big 3, time tracking, opportunity cooling and review.',
     image: null,
   },
   {
-    title: 'FinanceBIO',
-    label: 'HKU project',
-    text: 'A personal budget assistant for students, developed through fast prototyping, scope reduction and an MVP rebuild.',
+    title: 'Trade Review',
+    label: 'Fintech tool · Prototype',
+    text: 'A read-only trading journal that turns activity into behavioral patterns, review prompts and more consistent rules.',
+    image: null,
+  },
+  {
+    title: 'DINQ',
+    label: 'Talent identity · Product research',
+    text: 'A dynamic professional identity layer built around verifiable evidence of work—not just static credentials.',
     image: null,
   },
   {
     title: 'Hejia CoolDown',
-    label: 'Product experiment',
+    label: 'Family communication · Experiment',
     text: 'An AI communication assistant exploring preparation, mediation and review for difficult family conversations.',
     image: '/images/hejia-cooldown-ui.png',
   },
@@ -211,23 +223,27 @@ export default function App() {
           ))}
         </div>
 
-        <div className="experiments">
-          <p className="section-label">Other experiments</p>
-          <div>
-            {experiments.map((project) => (
-              <article className={`experiment ${project.image ? 'has-image' : ''}`} key={project.title}>
-                <div>
+        <div className="project-archive">
+          <div className="archive-heading">
+            <p className="section-label">Project archive</p>
+            <p>Products and systems moving from an idea toward something testable.</p>
+          </div>
+          <div className="archive-grid">
+            {projects.map((project, index) => (
+              <article className={`archive-card ${project.image ? 'with-image' : ''}`} key={project.title}>
+                <div className="archive-meta">
+                  <span>0{index + 1}</span>
                   <p>{project.label}</p>
-                  <h3>{project.title}</h3>
                 </div>
-                <p>{project.text}</p>
+                <div className="archive-copy">
+                  <h3>{project.title}</h3>
+                  <p>{project.text}</p>
+                </div>
                 {project.image && (
                   <img
-                    className="experiment-image"
+                    className="archive-image"
                     src={project.image}
-                    alt="Hejia CoolDown communication plan prototype interface"
-                    width="640"
-                    height="1074"
+                    alt={project.title === 'AI Training Suit' ? 'AI Training Suit product concept presentation' : 'Hejia CoolDown communication plan prototype interface'}
                     loading="lazy"
                   />
                 )}
@@ -277,7 +293,7 @@ export default function App() {
           <article>
             <p className="period">2025—Now</p>
             <div className="organization-with-logo">
-              <img src="/images/aurora-club.jpg" alt="Aurora Club emblem" width="800" height="800" loading="lazy" />
+              <img src="/images/aurora-club-new.svg" alt="Aurora Club compass emblem" width="1200" height="1200" loading="lazy" />
               <div><h3>Aurora Club</h3><p>Founder &amp; Chair</p></div>
             </div>
             <p>Building a cross-region network for young founders, developers, investors and builders.</p>

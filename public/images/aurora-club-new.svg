@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <defs>
+    <style>
+      .navy { fill: #06264d; }
+      .gold-fill { fill: #d4a044; }
+      .ring { fill: none; stroke: #06264d; stroke-width: 13; }
+      .thin-navy { fill: none; stroke: #06264d; stroke-width: 5; }
+      .thin-gold { fill: none; stroke: #d4a044; stroke-width: 5; }
+      .letter { fill: #06264d; font-family: Georgia, "Times New Roman", serif; font-size: 82px; font-weight: 600; letter-spacing: 20px; }
+      .cn { fill: #06264d; font-family: "Songti SC", "Noto Serif CJK SC", serif; font-size: 67px; font-weight: 700; letter-spacing: 18px; }
+    </style>
+    <radialGradient id="paper" cx="50%" cy="44%" r="58%">
+      <stop offset="0%" stop-color="#fffdf9"/>
+      <stop offset="76%" stop-color="#fff8eb"/>
+      <stop offset="100%" stop-color="#f2dfbf"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff1a8"/>
+      <stop offset="22%" stop-color="#d69b35"/>
+      <stop offset="48%" stop-color="#fff6be"/>
+      <stop offset="74%" stop-color="#c78324"/>
+      <stop offset="100%" stop-color="#ffe28a"/>
+    </linearGradient>
+    <radialGradient id="blueDisk" cx="46%" cy="38%" r="70%">
+      <stop offset="0%" stop-color="#0d417a"/>
+      <stop offset="100%" stop-color="#061e42"/>
+    </radialGradient>
+    <path id="topTextPath" d="M 262 552 A 338 338 0 0 1 938 552"/>
+    <path id="bottomTextPath" d="M 360 825 A 300 300 0 0 0 840 825"/>
+  </defs>
+
+  <rect width="1200" height="1200" fill="none"/>
+  <circle cx="600" cy="600" r="418" fill="url(#paper)" stroke="#d4a044" stroke-width="5"/>
+  <circle cx="600" cy="600" r="394" class="ring"/>
+  <circle cx="600" cy="600" r="375" class="thin-gold"/>
+  <circle cx="600" cy="600" r="280" fill="url(#blueDisk)" stroke="#d4a044" stroke-width="6"/>
+  <circle cx="600" cy="600" r="305" class="ring"/>
+  <circle cx="600" cy="600" r="230" class="thin-gold"/>
+  <circle cx="600" cy="600" r="168" class="thin-gold" opacity=".95"/>
+
+  <g fill="none" stroke="#d4a044" stroke-width="4" stroke-linecap="round" opacity=".98">
+    <path d="M355 600 A245 245 0 0 1 845 600"/>
+    <path d="M430 720 A205 205 0 0 0 770 720"/>
+    <path d="M408 492 A222 222 0 0 1 792 492"/>
+  </g>
+
+  <g id="compass-star">
+    <polygon points="600,315 635,560 600,600 565,560" fill="url(#gold)"/>
+    <polygon points="600,885 565,640 600,600 635,640" fill="url(#gold)"/>
+    <polygon points="315,600 560,565 600,600 560,635" fill="url(#gold)"/>
+    <polygon points="885,600 640,635 600,600 640,565" fill="url(#gold)"/>
+    <polygon points="745,455 628,575 600,600 625,627" fill="url(#gold)"/>
+    <polygon points="455,745 575,628 600,600 627,625" fill="url(#gold)"/>
+    <polygon points="455,455 575,572 600,600 572,625" fill="url(#gold)"/>
+    <polygon points="745,745 625,628 600,600 628,575" fill="url(#gold)"/>
+    <circle cx="600" cy="600" r="37" fill="#fff3aa" opacity=".92"/>
+  </g>
+
+  <g class="gold-fill">
+    <circle cx="415" cy="520" r="17"/>
+    <circle cx="785" cy="455" r="18"/>
+    <circle cx="600" cy="766" r="18"/>
+    <circle cx="255" cy="640" r="13"/>
+    <circle cx="945" cy="640" r="13"/>
+  </g>
+
+  <text class="letter">
+    <textPath href="#topTextPath" startOffset="50%" text-anchor="middle">AURORA CLUB</textPath>
+  </text>
+  <text class="cn">
+    <textPath href="#bottomTextPath" startOffset="50%" text-anchor="middle">极光俱乐部</textPath>
+  </text>
+</svg>
