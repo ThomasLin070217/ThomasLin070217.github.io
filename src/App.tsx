@@ -7,6 +7,7 @@ const featuredWork = [
       'Building a learning and practice community for people who want to turn AI ideas into real projects.',
     detail: 'Community building · Product practice · Industry connection',
     tone: 'green',
+    image: '/images/innoai-hku.png',
   },
   {
     number: '02',
@@ -16,6 +17,7 @@ const featuredWork = [
       'Exploring how professional communities can turn scattered relationships, intent and collaboration into useful infrastructure.',
     detail: 'Product · Growth · Business development',
     tone: 'ink',
+    image: null,
   },
   {
     number: '03',
@@ -25,6 +27,7 @@ const featuredWork = [
       'A cross-city hackathon built to move ideas toward prototypes that can be seen, tested and continued after Demo Day.',
     detail: 'AI · Hardware · Physical AI · Enterprise use cases',
     tone: 'sand',
+    image: null,
   },
 ];
 
@@ -33,16 +36,19 @@ const experiments = [
     title: 'DINQ',
     label: 'Product research',
     text: 'A dynamic professional identity layer built around evidence of work—not just static credentials.',
+    image: null,
   },
   {
     title: 'FinanceBIO',
     label: 'HKU project',
     text: 'A personal budget assistant for students, developed through fast prototyping, scope reduction and an MVP rebuild.',
+    image: null,
   },
   {
     title: 'Hejia CoolDown',
     label: 'Product experiment',
     text: 'An AI communication assistant exploring preparation, mediation and review for difficult family conversations.',
+    image: '/images/hejia-cooldown-ui.png',
   },
 ];
 
@@ -82,6 +88,38 @@ export default function App() {
         <span>BA &amp; BEng in Artificial Intelligence and Data Science · The University of Hong Kong</span>
       </section>
 
+      <section className="visual-journal" aria-label="Places shaping the work">
+        <figure className="visual-card visual-card-wide">
+          <img
+            src="/images/hku-main-building.jpg"
+            alt="The historic Main Building at The University of Hong Kong"
+            width="1280"
+            height="850"
+          />
+          <figcaption><span>01</span> The University of Hong Kong</figcaption>
+        </figure>
+        <figure className="visual-card">
+          <img
+            src="/images/hong-kong-night.jpg"
+            alt="Hong Kong skyline and Victoria Harbour at night"
+            width="1920"
+            height="1040"
+            loading="lazy"
+          />
+          <figcaption><span>02</span> Hong Kong · Base</figcaption>
+        </figure>
+        <figure className="visual-card">
+          <img
+            src="/images/shenzhen-skyline.jpg"
+            alt="Shenzhen skyline seen from Nanshan"
+            width="1280"
+            height="854"
+            loading="lazy"
+          />
+          <figcaption><span>03</span> Shenzhen · Builder network</figcaption>
+        </figure>
+      </section>
+
       <section className="section work" id="work">
         <div className="section-heading">
           <div>
@@ -98,7 +136,13 @@ export default function App() {
                 <span>{project.number}</span>
                 <span>Selected work</span>
               </div>
-              <div className="project-mark" aria-hidden="true">{project.title.slice(0, 2)}</div>
+              <div className={`project-mark ${project.image ? 'project-mark-image' : ''}`}>
+                {project.image ? (
+                  <img src={project.image} alt="InnoAI x HKU community mark" width="358" height="358" loading="lazy" />
+                ) : (
+                  <span aria-hidden="true">{project.title.slice(0, 2)}</span>
+                )}
+              </div>
               <p className="project-meta">{project.meta}</p>
               <h3>{project.title}</h3>
               <p className="project-description">{project.description}</p>
@@ -111,12 +155,22 @@ export default function App() {
           <p className="section-label">Other experiments</p>
           <div>
             {experiments.map((project) => (
-              <article className="experiment" key={project.title}>
+              <article className={`experiment ${project.image ? 'has-image' : ''}`} key={project.title}>
                 <div>
                   <p>{project.label}</p>
                   <h3>{project.title}</h3>
                 </div>
                 <p>{project.text}</p>
+                {project.image && (
+                  <img
+                    className="experiment-image"
+                    src={project.image}
+                    alt="Hejia CoolDown communication plan prototype interface"
+                    width="640"
+                    height="1074"
+                    loading="lazy"
+                  />
+                )}
               </article>
             ))}
           </div>
@@ -144,7 +198,10 @@ export default function App() {
           </article>
           <article>
             <p className="period">2025—Now</p>
-            <div><h3>Aurora Club</h3><p>Founder &amp; Chair</p></div>
+            <div className="organization-with-logo">
+              <img src="/images/aurora-club.jpg" alt="Aurora Club emblem" width="800" height="800" loading="lazy" />
+              <div><h3>Aurora Club</h3><p>Founder &amp; Chair</p></div>
+            </div>
             <p>Building a cross-region network for young founders, developers, investors and builders.</p>
           </article>
         </div>
@@ -181,6 +238,13 @@ export default function App() {
         <p>Interested in AI products, community infrastructure or early-stage experiments?</p>
         <span>Public contact links will be added after confirmation.</span>
       </section>
+
+      <aside className="photo-credits" aria-label="Photo credits">
+        <span>Photo credits</span>
+        <p>
+          HKU Main Building by <a href="https://commons.wikimedia.org/wiki/File:University_of_Hong_Kong_Main_Building.jpg" target="_blank" rel="noreferrer">Adon3465</a> · CC BY-SA 3.0. Shenzhen skyline by <a href="https://commons.wikimedia.org/wiki/File:Shenzhen_Skyline_from_Nanshan.jpg" target="_blank" rel="noreferrer">Simbaxu</a> · CC BY-SA 4.0. Hong Kong skyline by <a href="https://commons.wikimedia.org/wiki/File:Hong_Kong,_Part_2_-_HongKong8652.jpg" target="_blank" rel="noreferrer">lumoplank</a> · CC0.
+        </p>
+      </aside>
 
       <footer>
         <p>Thomas Lin · 林昱年</p>
