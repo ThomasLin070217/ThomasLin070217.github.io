@@ -7,7 +7,7 @@ const featuredWork = [
       'Building a learning and practice community for people who want to turn AI ideas into real projects.',
     detail: 'Community building · Product practice · Industry connection',
     tone: 'green',
-    image: '/images/innoai-hku.png',
+    image: '/images/innoai-logo.jpg',
   },
   {
     number: '02',
@@ -93,21 +93,21 @@ const journey = [
 
 const communityMoments = [
   {
-    image: '/images/event-room.jpg',
-    alt: 'A full room during a community builder event',
-    caption: 'Bringing builders into the same room',
+    image: '/images/innoai-shenzhen-event.jpg',
+    alt: 'InnoAI community members after an event in Shenzhen',
+    caption: 'InnoAI · Shenzhen',
     className: 'moment-main',
   },
   {
-    image: '/images/event-speaker.jpg',
-    alt: 'A speaker sharing with the Aurora community',
-    caption: 'Founder stories',
+    image: '/images/event-room.jpg',
+    alt: 'A full room during a community builder event',
+    caption: 'Bringing builders into the same room',
     className: '',
   },
   {
-    image: '/images/event-table.jpg',
-    alt: 'Participants discussing ideas around a table',
-    caption: 'Small-room conversations',
+    image: '/images/event-founder-sharing.jpg',
+    alt: 'A young founder sharing the SurferGarage project',
+    caption: 'Project sharing',
     className: '',
   },
   {
@@ -223,27 +223,21 @@ export default function App() {
           ))}
         </div>
 
-        <div className="project-archive">
-          <div className="archive-heading">
-            <p className="section-label">Project archive</p>
-            <p>Products and systems moving from an idea toward something testable.</p>
-          </div>
-          <div className="archive-grid">
-            {projects.map((project, index) => (
-              <article className={`archive-card ${project.image ? 'with-image' : ''}`} key={project.title}>
-                <div className="archive-meta">
-                  <span>0{index + 1}</span>
+        <div className="experiments">
+          <p className="section-label">More projects</p>
+          <div>
+            {projects.map((project) => (
+              <article className={`experiment ${project.image ? 'has-image' : ''}`} key={project.title}>
+                <div>
                   <p>{project.label}</p>
-                </div>
-                <div className="archive-copy">
                   <h3>{project.title}</h3>
-                  <p>{project.text}</p>
                 </div>
+                <p>{project.text}</p>
                 {project.image && (
                   <img
-                    className="archive-image"
+                    className="experiment-image"
                     src={project.image}
-                    alt={project.title === 'AI Training Suit' ? 'AI Training Suit product concept presentation' : 'Hejia CoolDown communication plan prototype interface'}
+                    alt={project.title === 'AI Training Suit' ? 'AI Training Suit wearable movement guidance concept' : 'Hejia CoolDown communication plan prototype interface'}
                     loading="lazy"
                   />
                 )}
@@ -293,7 +287,7 @@ export default function App() {
           <article>
             <p className="period">2025—Now</p>
             <div className="organization-with-logo">
-              <img src="/images/aurora-club-new.svg" alt="Aurora Club compass emblem" width="1200" height="1200" loading="lazy" />
+              <img src="/images/aurora-club-official.jpg" alt="Aurora Club official emblem" width="1000" height="1000" loading="lazy" />
               <div><h3>Aurora Club</h3><p>Founder &amp; Chair</p></div>
             </div>
             <p>Building a cross-region network for young founders, developers, investors and builders.</p>
