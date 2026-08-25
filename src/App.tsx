@@ -274,10 +274,14 @@ export default function App() {
           <p>Across industry, startups and communities.</p>
         </div>
         <div className="experience-list">
-          <article>
+          <article className="experience-with-image">
             <p className="period">2026</p>
             <div><h3>SenseTime</h3><p>AI engineering internship · Shanghai</p></div>
             <p>Exploring multimodal AI and computer vision workflows for intelligent vehicle scenarios.</p>
+            <figure className="experience-image">
+              <img src="/images/sensetime-shanghai.jpg" alt="SenseTime Shanghai office atrium" loading="lazy" />
+              <figcaption>SenseTime · Shanghai</figcaption>
+            </figure>
           </article>
           <article>
             <p className="period">Now</p>
