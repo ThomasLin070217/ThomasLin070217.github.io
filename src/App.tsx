@@ -52,6 +52,66 @@ const experiments = [
   },
 ];
 
+const journey = [
+  {
+    place: 'Weihai No. 1 School',
+    location: 'Weihai · China',
+    image: '/images/journey-weihai.jpg',
+    alt: 'An evening street scene from Thomas’s years in Weihai',
+  },
+  {
+    place: 'Wodonga Senior Secondary College',
+    location: 'Victoria · Australia · 2023—2024',
+    image: '/images/journey-wodonga.jpg',
+    alt: 'Thomas with friends during his time in Wodonga, Australia',
+  },
+  {
+    place: 'Zunli',
+    location: 'Shenzhen · China',
+    image: '/images/journey-zunli.jpg',
+    alt: 'Thomas with classmates during his time at Zunli',
+  },
+  {
+    place: 'The University of Hong Kong',
+    location: 'Hong Kong · Now',
+    image: '/images/journey-hku.jpg',
+    alt: 'The University of Hong Kong sign photographed by Thomas',
+  },
+];
+
+const communityMoments = [
+  {
+    image: '/images/event-room.jpg',
+    alt: 'A full room during a community builder event',
+    caption: 'Bringing builders into the same room',
+    className: 'moment-main',
+  },
+  {
+    image: '/images/event-speaker.jpg',
+    alt: 'A speaker sharing with the Aurora community',
+    caption: 'Founder stories',
+    className: '',
+  },
+  {
+    image: '/images/event-table.jpg',
+    alt: 'Participants discussing ideas around a table',
+    caption: 'Small-room conversations',
+    className: '',
+  },
+  {
+    image: '/images/event-presentation.jpg',
+    alt: 'A presentation at an Aurora Club gathering',
+    caption: 'Learning in public',
+    className: '',
+  },
+  {
+    image: '/images/event-group.jpg',
+    alt: 'A group photo after a community gathering',
+    caption: 'The people behind the network',
+    className: '',
+  },
+];
+
 export default function App() {
   return (
     <main>
@@ -91,32 +151,32 @@ export default function App() {
       <section className="visual-journal" aria-label="Places shaping the work">
         <figure className="visual-card visual-card-wide">
           <img
-            src="/images/hku-main-building.jpg"
-            alt="The historic Main Building at The University of Hong Kong"
-            width="1280"
-            height="850"
+            src="/images/life-hku-community.jpg"
+            alt="Thomas and friends at The University of Hong Kong"
+            width="1800"
+            height="1350"
           />
-          <figcaption><span>01</span> The University of Hong Kong</figcaption>
+          <figcaption><span>01</span> HKU · Learning with people</figcaption>
         </figure>
         <figure className="visual-card">
           <img
-            src="/images/hong-kong-night.jpg"
-            alt="Hong Kong skyline and Victoria Harbour at night"
-            width="1920"
-            height="1040"
+            src="/images/life-wodonga-class.jpg"
+            alt="Thomas with classmates at Wodonga Senior Secondary College"
+            width="1350"
+            height="1800"
             loading="lazy"
           />
-          <figcaption><span>02</span> Hong Kong · Base</figcaption>
+          <figcaption><span>02</span> Wodonga · Australia</figcaption>
         </figure>
         <figure className="visual-card">
           <img
-            src="/images/shenzhen-skyline.jpg"
-            alt="Shenzhen skyline seen from Nanshan"
-            width="1280"
-            height="854"
+            src="/images/life-community-gathering.jpg"
+            alt="Thomas with members after a community gathering"
+            width="1800"
+            height="1350"
             loading="lazy"
           />
-          <figcaption><span>03</span> Shenzhen · Builder network</figcaption>
+          <figcaption><span>03</span> Community · Built together</figcaption>
         </figure>
       </section>
 
@@ -177,10 +237,28 @@ export default function App() {
         </div>
       </section>
 
+      <section className="section moments" aria-label="Community moments">
+        <div className="section-heading">
+          <div>
+            <p className="section-label">02 / In motion</p>
+            <h2>Communities are built in rooms</h2>
+          </div>
+          <p>Gatherings, conversations and people choosing to build together.</p>
+        </div>
+        <div className="moments-grid">
+          {communityMoments.map((moment) => (
+            <figure className={`moment ${moment.className}`} key={moment.image}>
+              <img src={moment.image} alt={moment.alt} loading="lazy" />
+              <figcaption>{moment.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
       <section className="section experience" id="experience">
         <div className="section-heading">
           <div>
-            <p className="section-label">02 / Experience</p>
+            <p className="section-label">03 / Experience</p>
             <h2>Learning by doing</h2>
           </div>
           <p>Across industry, startups and communities.</p>
@@ -208,7 +286,7 @@ export default function App() {
       </section>
 
       <section className="philosophy" id="about">
-        <p className="section-label">03 / How I work</p>
+        <p className="section-label">04 / How I work</p>
         <p className="philosophy-lead">
           Human judgment defines the <em>goal, taste and priorities.</em> AI expands what a small team can execute.
         </p>
@@ -220,11 +298,29 @@ export default function App() {
         </div>
       </section>
 
-      <section className="background">
-        <p className="section-label">Background</p>
-        <div>
+      <section className="section journey" aria-label="Education journey">
+        <div className="section-heading journey-heading">
+          <div>
+            <p className="section-label">05 / Path</p>
+            <h2>Weihai → Wodonga → Zunli → HKU</h2>
+          </div>
+          <p>A path shaped across China, Australia and Hong Kong.</p>
+        </div>
+        <div className="journey-grid">
+          {journey.map((chapter, index) => (
+            <figure className="journey-card" key={chapter.place}>
+              <img src={chapter.image} alt={chapter.alt} loading="lazy" />
+              <figcaption>
+                <span>0{index + 1}</span>
+                <strong>{chapter.place}</strong>
+                <small>{chapter.location}</small>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <div className="journey-note">
           <p>
-            I&apos;m studying Artificial Intelligence and Data Science at HKU, while building across university, startup and industry environments.
+            Before HKU, I studied across Weihai, Wodonga and Zunli—moving through different classrooms, cultures and communities.
           </p>
           <p>
             I&apos;m early in the journey. This site is a living record of what I&apos;m building, learning and testing—not a list of inflated titles.
@@ -233,18 +329,11 @@ export default function App() {
       </section>
 
       <section className="contact" id="contact">
-        <p className="section-label">04 / Contact</p>
+        <p className="section-label">06 / Contact</p>
         <h2>Let&apos;s build something useful.</h2>
         <p>Interested in AI products, community infrastructure or early-stage experiments?</p>
         <span>Public contact links will be added after confirmation.</span>
       </section>
-
-      <aside className="photo-credits" aria-label="Photo credits">
-        <span>Photo credits</span>
-        <p>
-          HKU Main Building by <a href="https://commons.wikimedia.org/wiki/File:University_of_Hong_Kong_Main_Building.jpg" target="_blank" rel="noreferrer">Adon3465</a> · CC BY-SA 3.0. Shenzhen skyline by <a href="https://commons.wikimedia.org/wiki/File:Shenzhen_Skyline_from_Nanshan.jpg" target="_blank" rel="noreferrer">Simbaxu</a> · CC BY-SA 4.0. Hong Kong skyline by <a href="https://commons.wikimedia.org/wiki/File:Hong_Kong,_Part_2_-_HongKong8652.jpg" target="_blank" rel="noreferrer">lumoplank</a> · CC0.
-        </p>
-      </aside>
 
       <footer>
         <p>Thomas Lin · 林昱年</p>
