@@ -1,65 +1,79 @@
+import { useState } from 'react';
+
 const featuredWork = [
   {
     number: '01',
     title: 'InnoAI',
     meta: 'Founder · AI Builder Community',
     description:
-      'Building a learning and practice community for people who want to turn AI ideas into real projects.',
-    detail: 'Community building · Product practice · Industry connection',
+      'Founded in April 2026, InnoAI is a learning and practice community for people turning AI ideas into real projects.',
+    detail: 'Founded 1 Apr 2026 · Strategy · Organization · Operations',
     tone: 'green',
     image: '/images/innoai-logo.jpg',
+    alt: 'InnoAI x HKU community mark',
+    wideImage: false,
   },
   {
     number: '02',
-    title: 'ColorBlock',
-    meta: 'Co-founder · Community Infrastructure',
+    title: 'AIx Origin Summit',
+    meta: 'Organizer · AI Builder Event',
     description:
-      'Exploring how professional communities can turn scattered relationships, intent and collaboration into useful infrastructure.',
-    detail: 'Product · Growth · Business development',
+      'A Hong Kong × Shenzhen builder summit moving ideas toward prototypes that can be seen, tested and continued after Demo Day.',
+    detail: '31 Aug—6 Sep 2026 · Online + HKU campus',
     tone: 'ink',
-    image: null,
+    image: '/images/aix-origin-cover.png',
+    alt: 'AIx Origin Summit visual identity',
+    wideImage: true,
   },
   {
     number: '03',
-    title: 'AIx Origin Summit',
-    meta: 'Hong Kong × Shenzhen · Builder Event',
+    title: 'Aurora Club',
+    meta: 'Founder & Chair · Founder Network',
     description:
-      'A cross-city hackathon built to move ideas toward prototypes that can be seen, tested and continued after Demo Day.',
-    detail: 'AI · Hardware · Physical AI · Enterprise use cases',
+      'Building a 200+ member network connecting young founders, developers, investors, students and builders across cities.',
+    detail: 'Shenzhen · Hong Kong · Shanghai · Hangzhou · Beijing · Beyond',
     tone: 'sand',
-    image: null,
+    image: '/images/aurora-club-official.jpg',
+    alt: 'Aurora Club official emblem',
+    wideImage: false,
   },
 ];
 
 const projects = [
   {
+    title: 'ColorBlock Network',
+    label: 'Past venture · Co-founder',
+    text: 'Previously explored professional identity and community infrastructure through ColorTap and ColorCommunityDB.',
+    image: null,
+  },
+  {
     title: 'AI Training Suit',
-    label: 'Wearable AI · Product prototype',
-    text: 'A wearable movement-guidance concept combining body sensors, AI motion recognition and real-time voice or haptic correction.',
+    label: 'Wearable AI · In planning',
+    text: 'An early-stage idea for movement guidance combining body sensors, AI motion recognition and real-time voice or haptic correction.',
     image: '/images/ai-training-suit.jpg',
   },
   {
     title: 'TOS',
     label: 'Personal system · Local-first',
     text: 'A personal operating system for weekly strategy, Today Big 3, time tracking, opportunity cooling and review.',
-    image: null,
+    image: '/images/tos-focus.jpg',
   },
   {
     title: 'Trade Review',
     label: 'Fintech tool · Prototype',
     text: 'A read-only trading journal that turns activity into behavioral patterns, review prompts and more consistent rules.',
-    image: null,
+    image: '/images/trade-review-pretrade.jpg',
   },
   {
     title: 'DINQ',
-    label: 'Talent identity · Product research',
-    text: 'A dynamic professional identity layer built around verifiable evidence of work—not just static credentials.',
+    label: 'Past internship · Product research',
+    text: 'Contributed product-experience improvements and research for a dynamic professional identity built around verifiable evidence of work.',
     image: null,
   },
   {
     title: 'Hejia CoolDown',
-    label: 'Family communication · Experiment',
-    text: 'An AI communication assistant exploring preparation, mediation and review for difficult family conversations.',
+    label: 'Project mentor · Young builders',
+    text: 'Mentored a team of young builders, averaging 12 years old, to create an AI assistant for difficult family conversations.',
     image: '/images/hejia-cooldown-ui.png',
   },
 ];
@@ -124,7 +138,87 @@ const communityMoments = [
   },
 ];
 
+const indexItems = [
+  {
+    date: '2026.08',
+    title: 'SenseTime',
+    note: 'Local model deployment and AI data workflow automation.',
+    category: 'AI',
+    image: '/images/sensetime-shanghai.jpg',
+  },
+  {
+    date: '2026.08—09',
+    title: 'AIx Origin Summit',
+    note: 'Preparing a Hong Kong × Shenzhen AI builder programme.',
+    category: 'Community',
+    image: '/images/aix-origin-cover.png',
+  },
+  {
+    date: '2026.07',
+    title: 'Hejia CoolDown',
+    note: 'Mentoring a young team building a family communication prototype.',
+    category: 'Product',
+    image: '/images/hejia-cooldown-ui.png',
+  },
+  {
+    date: '2026.07',
+    title: 'AI Training Suit',
+    note: 'Developing an early wearable AI training concept.',
+    category: 'Experiment',
+    image: '/images/ai-training-suit.jpg',
+  },
+  {
+    date: '2026.04',
+    title: 'InnoAI',
+    note: 'Founded an AI Builder learning and practice community.',
+    category: 'Community',
+    image: '/images/innoai-shenzhen-event.jpg',
+  },
+  {
+    date: '2026.04',
+    title: 'TOS',
+    note: 'Built a local-first personal operating system.',
+    category: 'Product',
+    image: '/images/tos-focus.jpg',
+  },
+  {
+    date: '2026.04',
+    title: 'Trade Review',
+    note: 'Built a read-only journal for trading decisions and behavior.',
+    category: 'Product',
+    image: '/images/trade-review-pretrade.jpg',
+  },
+  {
+    date: '2026.03',
+    title: 'DINQ',
+    note: 'Product research and experience analysis during an internship.',
+    category: 'Research',
+    image: null,
+  },
+  {
+    date: '2025.11',
+    title: 'ColorBlock Network',
+    note: 'Explored professional identity and community infrastructure.',
+    category: 'Product',
+    image: null,
+  },
+  {
+    date: '2025.04',
+    title: 'Aurora Club',
+    note: 'Started a cross-region network for young founders and builders.',
+    category: 'Community',
+    image: '/images/aurora-club-official.jpg',
+  },
+];
+
+const indexCategories = ['All', 'AI', 'Product', 'Community', 'Research', 'Experiment'];
+
 export default function App() {
+  const [activeCategory, setActiveCategory] = useState('All');
+  const visibleIndexItems = activeCategory === 'All'
+    ? indexItems
+    : indexItems.filter((item) => item.category === activeCategory);
+
   return (
     <main>
       <header className="site-header">
@@ -132,8 +226,8 @@ export default function App() {
           TL<span>.</span>
         </a>
         <nav aria-label="Primary navigation">
+          <a href="#index">Index</a>
           <a href="#work">Work</a>
-          <a href="#experience">Experience</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -156,8 +250,44 @@ export default function App() {
 
       <section className="focus" aria-label="Current focus">
         <p className="section-label">Currently</p>
-        <strong>Designing systems that help people and AI execute together.</strong>
-        <span>BA &amp; BEng in Artificial Intelligence and Data Science · The University of Hong Kong</span>
+        <strong>SenseTime · InnoAI · Aurora Club</strong>
+        <span>Embedded software development intern · Founder · Student at HKU</span>
+      </section>
+
+      <section className="section archive-index" id="index">
+        <div className="section-heading">
+          <div>
+            <p className="section-label">00 / Index</p>
+            <h2>A record of building</h2>
+          </div>
+          <p>Projects, communities, research and experiments—in time.</p>
+        </div>
+        <div className="index-layout">
+          <div className="index-controls" aria-label="Filter index">
+            {indexCategories.map((category) => (
+              <button
+                className={activeCategory === category ? 'active' : ''}
+                key={category}
+                type="button"
+                onClick={() => setActiveCategory(category)}
+                aria-pressed={activeCategory === category}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+          <div className="index-list" aria-live="polite">
+            {visibleIndexItems.map((item) => (
+              <article className="index-row" key={`${item.date}-${item.title}`} tabIndex={0}>
+                <time>{item.date}</time>
+                <h3>{item.title}</h3>
+                <p>{item.note}</p>
+                <span>{item.category}</span>
+                {item.image && <img src={item.image} alt="" aria-hidden="true" loading="lazy" />}
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section className="visual-journal" aria-label="Places shaping the work">
@@ -208,9 +338,9 @@ export default function App() {
                 <span>{project.number}</span>
                 <span>Selected work</span>
               </div>
-              <div className={`project-mark ${project.image ? 'project-mark-image' : ''}`}>
+              <div className={`project-mark ${project.image ? 'project-mark-image' : ''} ${project.wideImage ? 'project-mark-wide' : ''}`}>
                 {project.image ? (
-                  <img src={project.image} alt="InnoAI x HKU community mark" width="358" height="358" loading="lazy" />
+                  <img src={project.image} alt={project.alt} width="358" height="358" loading="lazy" />
                 ) : (
                   <span aria-hidden="true">{project.title.slice(0, 2)}</span>
                 )}
@@ -237,7 +367,15 @@ export default function App() {
                   <img
                     className="experiment-image"
                     src={project.image}
-                    alt={project.title === 'AI Training Suit' ? 'AI Training Suit wearable movement guidance concept' : 'Hejia CoolDown communication plan prototype interface'}
+                    alt={
+                      project.title === 'AI Training Suit'
+                        ? 'AI Training Suit wearable movement guidance concept'
+                        : project.title === 'TOS'
+                          ? 'Thomas Operating System focus view'
+                          : project.title === 'Trade Review'
+                            ? 'Trade Review pre-trade checklist interface'
+                            : 'Hejia CoolDown communication plan prototype interface'
+                    }
                     loading="lazy"
                   />
                 )}
@@ -275,26 +413,26 @@ export default function App() {
         </div>
         <div className="experience-list">
           <article className="experience-with-image">
-            <p className="period">2026</p>
-            <div><h3>SenseTime</h3><p>AI engineering internship · Shanghai</p></div>
-            <p>Exploring multimodal AI and computer vision workflows for intelligent vehicle scenarios.</p>
+            <p className="period">Aug 2026—Now</p>
+            <div><h3>SenseTime</h3><p>Embedded software development intern · Shanghai</p></div>
+            <p>Working on local model deployment and automating AI-generated data workflows for intelligent vehicle scenarios.</p>
             <figure className="experience-image">
               <img src="/images/sensetime-shanghai.jpg" alt="SenseTime Shanghai office atrium" loading="lazy" />
               <figcaption>SenseTime · Shanghai</figcaption>
             </figure>
           </article>
           <article>
-            <p className="period">Now</p>
+            <p className="period">Past</p>
             <div><h3>ColorBlock Network</h3><p>Co-founder</p></div>
-            <p>Working across product, early technology, business development and company building.</p>
+            <p>Previously worked across product, early technology, business development and company building.</p>
           </article>
           <article>
-            <p className="period">2025—Now</p>
+            <p className="period">Apr 2025—Now</p>
             <div className="organization-with-logo">
               <img src="/images/aurora-club-official.jpg" alt="Aurora Club official emblem" width="1000" height="1000" loading="lazy" />
               <div><h3>Aurora Club</h3><p>Founder &amp; Chair</p></div>
             </div>
-            <p>Building a cross-region network for young founders, developers, investors and builders.</p>
+            <p>Building a 200+ member network across Shenzhen, Hong Kong, Shanghai, Hangzhou, Beijing and beyond.</p>
           </article>
         </div>
       </section>
@@ -346,7 +484,11 @@ export default function App() {
         <p className="section-label">06 / Contact</p>
         <h2>Let&apos;s build something useful.</h2>
         <p>Interested in AI products, community infrastructure or early-stage experiments?</p>
-        <span>Public contact links will be added after confirmation.</span>
+        <div className="contact-links">
+          <a href="mailto:thomaslin070217@gmail.com">Email ↗</a>
+          <a href="https://github.com/ThomasLin070217" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <span>Xiaohongshu · 2546938708</span>
+        </div>
       </section>
 
       <footer>
