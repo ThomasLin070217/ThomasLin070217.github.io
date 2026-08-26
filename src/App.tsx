@@ -1,500 +1,247 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const featuredWork = [
-  {
-    number: '01',
-    title: 'InnoAI',
-    meta: 'Founder · AI Builder Community',
-    description:
-      'Founded in April 2026, InnoAI is a learning and practice community for people turning AI ideas into real projects.',
-    detail: 'Founded 1 Apr 2026 · Strategy · Organization · Operations',
-    tone: 'green',
-    image: '/images/innoai-logo.jpg',
-    alt: 'InnoAI x HKU community mark',
-    wideImage: false,
+type Language = 'en' | 'zh';
+type Copy = { en: string; zh: string };
+type Category = 'education' | 'work' | 'community' | 'projects';
+type ArchiveItem = {
+  id: string; category: Category; title: string; role: Copy; period: Copy;
+  summary: Copy; details: Copy[]; image?: string; imageAlt?: Copy;
+  link?: string; linkLabel?: Copy; stat?: Copy;
+};
+
+const copy = {
+  en: {
+    nav: ['About', 'Work', 'Community', 'Projects', 'Contact'], status: 'Hong Kong · Building now',
+    heroRole: 'Student · Builder · Community Founder',
+    heroLine: 'I build at the intersection of AI, products, and entrepreneurship.', explore: 'Explore the archive',
+    aboutLabel: '01 / About', aboutTitle: 'Most of what I learn happens through building.',
+    about: [
+      "I'm Thomas Lin, a student, builder, and community founder working at the intersection of AI, products, and entrepreneurship.",
+      'I study AI and Data Science at the University of Hong Kong, but most of what I learn happens through building. From experimenting with multimodal AI at SenseTime, to co-founding an early-stage AI startup, to building InnoAI and Aurora into communities for young builders and founders, I enjoy turning ambiguous ideas into things that can actually be tested, used, and scaled.',
+      "I'm especially interested in how AI changes the way we build products, organize teams, and start companies — and I try to stay close to that change by building alongside it.",
+    ],
+    now: 'Currently', nowValue: 'SenseTime · InnoAI · Aurora · HKU', archiveLabel: '02 / Archive',
+    archiveTitle: 'A clearer record of the work', archiveNote: 'Education, work, communities and projects—kept distinct, connected by building.',
+    categories: {
+      education: ['Education', 'Where I learned across different systems and cultures.'],
+      work: ['Work', 'Industry, internships and an early venture.'],
+      community: ['Community', 'Networks and rooms designed to help people build together.'],
+      projects: ['Projects', 'Products and experiments with something concrete to show.'],
+    },
+    detail: 'View details', visit: 'Visit project', close: 'Close', evidence: 'What this shows',
+    photosLabel: '03 / In the room', photosTitle: 'Communities become real when people show up.', photosNote: 'Selected moments from InnoAI and builder gatherings.',
+    contactLabel: '04 / Contact', contactTitle: "Let's build something useful.",
+    contactBody: 'Reach out if you are building at the intersection of AI, product and entrepreneurship—or want to explore a thoughtful collaboration.',
+    back: 'Back to top',
   },
-  {
-    number: '02',
-    title: 'AIx Origin Summit',
-    meta: 'Organizer · AI Builder Event',
-    description:
-      'A Hong Kong × Shenzhen builder summit moving ideas toward prototypes that can be seen, tested and continued after Demo Day.',
-    detail: '31 Aug—6 Sep 2026 · Online + HKU campus',
-    tone: 'ink',
-    image: '/images/aix-origin-cover.png',
-    alt: 'AIx Origin Summit visual identity',
-    wideImage: true,
+  zh: {
+    nav: ['关于', '工作', '社区', '项目', '联系'], status: '香港 · 持续构建中',
+    heroRole: '学生 · Builder · 社区创始人', heroLine: '我在人工智能、产品与创业的交叉地带持续构建。', explore: '查看经历档案',
+    aboutLabel: '01 / 关于', aboutTitle: '真正塑造我的学习，大多发生在持续构建的过程中。',
+    about: [
+      '我是 Thomas Lin，一名学生、Builder 和社区创始人，长期探索人工智能、产品与创业的交叉地带。',
+      '我在香港大学学习人工智能与数据科学，但真正塑造我的学习，大多发生在持续构建的过程中。从在商汤探索多模态 AI，到参与共同创办早期 AI 创业项目，再到把 InnoAI 和 Aurora 建设成年轻 Builder 与创业者的社区，我喜欢把模糊的想法变成能够被测试、使用并进一步放大的东西。',
+      '我尤其关注 AI 如何改变产品构建、团队组织与公司创立的方式。我希望通过持续参与和亲手构建，始终贴近这种变化。',
+    ],
+    now: '目前', nowValue: '商汤 · InnoAI · Aurora · 香港大学', archiveLabel: '02 / 经历档案',
+    archiveTitle: '把做过的事情讲清楚', archiveNote: '教育、工作、社区与项目彼此独立，又通过持续构建相互连接。',
+    categories: {
+      education: ['教育', '在不同教育体系与文化中学习。'], work: ['工作', '产业实习、产品研究与一次早期创业实践。'],
+      community: ['社区', '让年轻 Builder 与创业者真正连接并一起行动。'], projects: ['项目', '有实际内容可展示的产品与实验。'],
+    },
+    detail: '查看详情', visit: '访问项目', close: '关闭', evidence: '这段经历说明了什么',
+    photosLabel: '03 / 现场', photosTitle: '社区真正成立，是在人们愿意到场之后。', photosNote: '来自 InnoAI 与 Builder 活动的部分现场。',
+    contactLabel: '04 / 联系', contactTitle: '一起做点真正有用的事。',
+    contactBody: '如果你也在探索 AI、产品与创业的交叉地带，或者想讨论一次认真、有价值的合作，欢迎联系我。', back: '回到顶部',
   },
-  {
-    number: '03',
-    title: 'Aurora Club',
-    meta: 'Founder & Chair · Founder Network',
-    description:
-      'Building a 200+ member network connecting young founders, developers, investors, students and builders across cities.',
-    detail: 'Shenzhen · Hong Kong · Shanghai · Hangzhou · Beijing · Beyond',
-    tone: 'sand',
-    image: '/images/aurora-club-official.jpg',
-    alt: 'Aurora Club official emblem',
-    wideImage: false,
-  },
+};
+
+const items: ArchiveItem[] = [
+  { id: 'hku', category: 'education', title: 'The University of Hong Kong',
+    role: { en: 'AI & Data Science', zh: '人工智能与数据科学' }, period: { en: '2025—Now · Hong Kong', zh: '2025—至今 · 香港' },
+    summary: { en: 'Studying AI and Data Science while building products and communities beyond the classroom.', zh: '学习人工智能与数据科学，同时把课堂之外的时间用于产品、社区与真实项目。' },
+    details: [{ en: 'Combining technical study with hands-on work across AI products, early ventures and builder communities.', zh: '把技术学习与 AI 产品、早期创业和 Builder 社区的实际工作连接起来。' }],
+    image: '/images/journey-hku.jpg', imageAlt: { en: 'The University of Hong Kong', zh: '香港大学' } },
+  { id: 'wodonga', category: 'education', title: 'Wodonga Senior Secondary College',
+    role: { en: 'Senior secondary education', zh: '高中阶段学习' }, period: { en: '2023—2024 · Australia', zh: '2023—2024 · 澳大利亚' },
+    summary: { en: 'An international chapter that shaped how I adapt, communicate and work across cultures.', zh: '一段跨文化学习经历，塑造了我适应环境、沟通协作与理解不同体系的方式。' },
+    details: [{ en: 'Part of a broader path through Weihai, Wodonga, Shenzhen and Hong Kong.', zh: '这段经历也是威海、Wodonga、深圳与香港成长路径中的重要一站。' }],
+    image: '/images/journey-wodonga.jpg', imageAlt: { en: 'Thomas during his time in Wodonga', zh: 'Thomas 在 Wodonga 学习期间' } },
+  { id: 'zunli', category: 'education', title: 'Zunli',
+    role: { en: 'Secondary education', zh: '中学阶段学习' }, period: { en: 'Before HKU · Shenzhen', zh: '港大之前 · 深圳' },
+    summary: { en: 'A return to Shenzhen before university, connecting international study with the next stage in Hong Kong.', zh: '大学前回到深圳，把海外学习经历与下一阶段的香港生活连接起来。' },
+    details: [{ en: 'One chapter in a non-linear education path across different cities and learning environments.', zh: '这是跨越不同城市与学习环境的非线性教育路径中的一段。' }],
+    image: '/images/journey-zunli.jpg', imageAlt: { en: 'Thomas with classmates at Zunli', zh: 'Thomas 与 Zunli 同学' } },
+  { id: 'weihai', category: 'education', title: 'Weihai No. 1 School',
+    role: { en: 'Earlier education', zh: '早期教育经历' }, period: { en: 'Earlier · Weihai', zh: '早期 · 威海' },
+    summary: { en: 'The starting point of a path that later moved through Australia, Shenzhen and Hong Kong.', zh: '这段经历是后来前往澳大利亚、深圳与香港之前的起点。' },
+    details: [{ en: 'Kept here as context for the journey, without overstating an early school experience as professional work.', zh: '它为成长路径提供背景，但不会被夸大成职业成就。' }],
+    image: '/images/journey-weihai.jpg', imageAlt: { en: 'A scene from Thomas’s years in Weihai', zh: 'Thomas 在威海时期的城市记忆' } },
+  { id: 'sensetime', category: 'work', title: 'SenseTime',
+    role: { en: 'Embedded Software Development Intern', zh: '嵌入式软件开发实习生' }, period: { en: 'Aug 2026—Now · Shanghai', zh: '2026.08—至今 · 上海' },
+    summary: { en: 'Working on local model deployment and automating AI-generated data workflows for intelligent vehicle scenarios.', zh: '参与本地模型部署，并推动智能汽车场景中的 AI 生产数据流程自动化。' },
+    details: [
+      { en: 'Hands-on exposure to deploying local AI models in production-oriented environments.', zh: '在面向实际交付的环境中参与本地 AI 模型部署。' },
+      { en: 'Building workflow automation around AI-generated data rather than isolated demos.', zh: '围绕 AI 生产数据搭建自动化流程，而不只是完成孤立 Demo。' }],
+    image: '/images/sensetime-shanghai.jpg', imageAlt: { en: 'SenseTime Shanghai office', zh: '商汤上海办公空间' } },
+  { id: 'dinq', category: 'work', title: 'DINQ',
+    role: { en: 'Product Research Intern', zh: '产品研究实习生' }, period: { en: 'Mar 2026', zh: '2026.03' },
+    summary: { en: 'Improved product experience and produced product research for a dynamic professional identity platform.', zh: '围绕动态职业身份产品优化体验，并完成产品调研与分析文档。' },
+    details: [
+      { en: 'Analyzed product positioning and user experience with actionable recommendations.', zh: '分析产品定位与用户体验，并输出可执行的优化建议。' },
+      { en: 'A product research contribution—not represented as a company I founded.', zh: '这是一段产品研究型实习经历，并非由我创办的项目。' }] },
+  { id: 'colorblock', category: 'work', title: 'ColorBlock Network',
+    role: { en: 'Co-founder · Past venture', zh: '联合创始人 · 过往创业项目' }, period: { en: 'Nov 2025—Feb 2026', zh: '2025.11—2026.02' },
+    summary: { en: 'Explored professional identity and community infrastructure through early product and company building.', zh: '围绕职业身份与社区基础设施，完成一段早期产品与公司建设实践。' },
+    details: [
+      { en: 'Worked across product definition, early technology, business development and company building.', zh: '参与产品定义、早期技术、商务拓展与公司建设。' },
+      { en: 'The venture concluded in February 2026; it remains part of the record, not an ongoing claim.', zh: '项目已于 2026 年 2 月结束；保留为真实经历，不再包装为进行中项目。' }] },
+  { id: 'innoai', category: 'community', title: 'InnoAI',
+    role: { en: 'Founder · AI Builder Community', zh: '创始人 · AI Builder 社区' }, period: { en: '1 Apr 2026—Now', zh: '2026.04.01—至今' },
+    summary: { en: 'A practice-driven AI community where students, researchers and early founders turn ideas into real participation and projects.', zh: '一个强调实践的 AI 社区，让学生、研究者与早期创业者把想法转化为真实参与和项目。' },
+    details: [
+      { en: 'I lead positioning, organizational design, division of responsibilities, management and early member review.', zh: '我负责组织定位、组织建设、分工、管理，以及早期成员审核等工作。' },
+      { en: 'AIx Origin is an InnoAI-hosted flagship event that brought together 100 high-quality builders.', zh: 'AIx Origin 是由 InnoAI 主办的旗舰活动，聚集了 100 位高质量 Builder。' }],
+    image: '/images/innoai-shenzhen-event.jpg', imageAlt: { en: 'InnoAI members after an event in Shenzhen', zh: 'InnoAI 深圳活动合照' },
+    link: 'https://aixorigin.innoai.org.cn/', linkLabel: { en: 'AIx Origin website', zh: 'AIx Origin 官网' },
+    stat: { en: '100 builders at AIx Origin', zh: 'AIx Origin · 100 位 Builder' } },
+  { id: 'aurora', category: 'community', title: 'Aurora Club',
+    role: { en: 'Founder & Chair · Founder Network', zh: '创始人兼主席 · 青年创业者网络' }, period: { en: 'Apr 2025—Now', zh: '2025.04—至今' },
+    summary: { en: 'A 200+ member network connecting young founders, developers, investors, students and builders across cities.', zh: '连接青年创始人、开发者、投资人、学生与 Builder 的 200+ 成员网络。' },
+    details: [
+      { en: 'Organized five activities across Beijing, Shanghai, Hangzhou, Shenzhen and Hong Kong.', zh: '已在北京、上海、杭州、深圳和香港举办 5 场活动。' },
+      { en: 'Built around cross-city relationships and repeated participation, not only online audience numbers.', zh: '重点在跨城关系与持续参与，而不只是线上关注人数。' }],
+    image: '/images/aurora-club-official.jpg', imageAlt: { en: 'Aurora Club official emblem', zh: 'Aurora Club 官方标志' },
+    stat: { en: '200+ members · 5 cities', zh: '200+ 成员 · 5 座城市' } },
+  { id: 'token-roi', category: 'projects', title: 'Token ROI',
+    role: { en: 'AI Economics · Agent ROI', zh: 'AI 经济性 · Agent 投资回报' }, period: { en: '2026—Now', zh: '2026—至今' },
+    summary: { en: 'A framework for measuring the value created by AI agents, applied to a real cabin video QC agent and a controlled image-generation experiment.', zh: '一套衡量 AI Agent 实际价值的框架，并落地到真实的车舱视频质检 Agent 与一次受控的图片生成对比实验。' },
+    details: [
+      { en: 'Built an Agent ROI framework that treats completion of real tasks—not single calls—as the unit of value, folding in model, infrastructure, human and risk cost.', zh: '搭建一套以“完成任务”而非“单次调用”为价值单位的 Agent ROI 框架，把模型、基建、人工与风险成本都纳入计算。' },
+      { en: 'Cabin QC case: cut human review from ~16 min to ~5m40s per batch, with full ROI ~47.5% on a 152-video batch.', zh: '车舱质检案例：单批次人工核对从约 16 分钟降到约 5 分 40 秒；152 条视频的完整 ROI 约 47.5%。' },
+      { en: 'FLUX.2 case: ran a controlled generation experiment proving the model could not meet hard spatial/physical constraints, so the team stopped stacking prompts and pivoted the pipeline.', zh: 'FLUX.2 案例：用受控生成实验证明模型无法稳定满足精确坐标与安装物理门槛，最终停止堆 Prompt，转向可控合成管线。' }],
+    stat: { en: '47.5% ROI measured', zh: '实测 ROI 47.5%' } },
+  { id: 'ai-training-suit', category: 'projects', title: 'AI Training Suit',
+    role: { en: 'Wearable AI · Concept + pitch deck', zh: '可穿戴 AI · 概念与融资材料' }, period: { en: '2026 · Concept', zh: '2026 · 概念阶段' },
+    summary: { en: 'A motion-guidance system that puts a coach on you: body sensing, AI motion recognition and real-time voice & haptic correction.', zh: '一套把教练“穿在身上”的动作指导系统：身体传感 + AI 动作识别 + 实时语音与震动纠正。' },
+    details: [
+      { en: 'Shaped product, market and funnel into a 15-page pitch deck, plus a VC scorecard and a 4-week traction plan.', zh: '用一版 15 页 Pitch Deck + VC 记分卡 + 4 周 Traction 计划，把产品、市场与增长入口想清楚。' },
+      { en: 'Positioned as real-time in-motion guidance, starting from a lightweight wearable and optional sensor set.', zh: '定位为“实时进入动作过程”的指导，第一代从轻量可穿戴与可选传感器组合切入。' }],
+    image: '/images/ai-training-suit.jpg', imageAlt: { en: 'AI Training Suit concept', zh: 'AI Training Suit 概念图' } },
+  { id: 'tos', category: 'projects', title: 'TOS',
+    role: { en: 'Personal operating system · Working product', zh: '个人操作系统 · 可运行产品' }, period: { en: 'Apr 2026—Now', zh: '2026.04—至今' },
+    summary: { en: 'A local-first system for weekly strategy, Today Big 3, time tracking, opportunity cooling and review.', zh: '一个本地优先的个人系统，覆盖周策略、Today Big 3、时间记录、机会冷却与复盘。' },
+    details: [
+      { en: 'Built as a working tool for my own planning and decision system, not a static interface concept.', zh: '这是服务于我个人规划与决策系统的可运行工具，而非静态界面概念。' },
+      { en: 'Connects priorities, capacity and review into one repeatable workflow.', zh: '把优先级、个人容量与复盘连接成可重复的工作流。' }],
+    image: '/images/tos-focus.jpg', imageAlt: { en: 'TOS focus interface', zh: 'TOS 专注界面' } },
+  { id: 'trade-review', category: 'projects', title: 'Trade Review',
+    role: { en: 'Decision tool · Working product', zh: '决策工具 · 可运行产品' }, period: { en: 'Apr 2026—Now', zh: '2026.04—至今' },
+    summary: { en: 'A read-only trading journal that turns activity into behavior patterns, checks and review prompts.', zh: '一个只读交易日志，把交易活动转化为行为模式、检查项与复盘提示。' },
+    details: [
+      { en: 'Uses read-only data synchronization and pre-trade checks to support more consistent decisions.', zh: '通过只读数据同步与交易前检查，帮助形成更一致的决策过程。' },
+      { en: 'Focuses on behavior and review rather than trade signals.', zh: '重点是行为与复盘，而不是提供交易信号。' }],
+    image: '/images/trade-review-pretrade.jpg', imageAlt: { en: 'Trade Review pre-trade interface', zh: 'Trade Review 交易前检查界面' },
+    link: 'https://github.com/ThomasLin070217/Trade-Review', linkLabel: { en: 'GitHub', zh: 'GitHub' } },
+  { id: 'hejia', category: 'projects', title: 'Hejia CoolDown',
+    role: { en: 'Project mentor · Young builders', zh: '项目导师 · 青少年 Builder' }, period: { en: '2026', zh: '2026' },
+    summary: { en: 'Mentored a team averaging 12 years old to build an AI assistant for difficult family conversations.', zh: '指导一群平均年龄 12 岁的孩子，共同完成面向家庭沟通难题的 AI 助手。' },
+    details: [
+      { en: 'Guided the team from problem framing to a presentable product concept and interface.', zh: '带领团队从问题定义走到可展示的产品概念与界面。' },
+      { en: 'The value is both the prototype and helping very young builders experience a complete project cycle.', zh: '价值不仅在原型，也在于让低龄 Builder 经历一次完整的项目周期。' }],
+    image: '/images/hejia-cooldown-ui.png', imageAlt: { en: 'Hejia CoolDown interface', zh: 'Hejia CoolDown 产品界面' } },
 ];
 
-const projects = [
-  {
-    title: 'ColorBlock Network',
-    label: 'Past venture · Co-founder',
-    text: 'Previously explored professional identity and community infrastructure through ColorTap and ColorCommunityDB.',
-    image: null,
-  },
-  {
-    title: 'AI Training Suit',
-    label: 'Wearable AI · In planning',
-    text: 'An early-stage idea for movement guidance combining body sensors, AI motion recognition and real-time voice or haptic correction.',
-    image: '/images/ai-training-suit.jpg',
-  },
-  {
-    title: 'TOS',
-    label: 'Personal system · Local-first',
-    text: 'A personal operating system for weekly strategy, Today Big 3, time tracking, opportunity cooling and review.',
-    image: '/images/tos-focus.jpg',
-  },
-  {
-    title: 'Trade Review',
-    label: 'Fintech tool · Prototype',
-    text: 'A read-only trading journal that turns activity into behavioral patterns, review prompts and more consistent rules.',
-    image: '/images/trade-review-pretrade.jpg',
-  },
-  {
-    title: 'DINQ',
-    label: 'Past internship · Product research',
-    text: 'Contributed product-experience improvements and research for a dynamic professional identity built around verifiable evidence of work.',
-    image: null,
-  },
-  {
-    title: 'Hejia CoolDown',
-    label: 'Project mentor · Young builders',
-    text: 'Mentored a team of young builders, averaging 12 years old, to create an AI assistant for difficult family conversations.',
-    image: '/images/hejia-cooldown-ui.png',
-  },
+const categoryOrder: Category[] = ['education', 'work', 'community', 'projects'];
+const photoMoments = [
+  { src: '/images/innoai-shenzhen-event.jpg', en: 'InnoAI · Shenzhen', zh: 'InnoAI · 深圳', altEn: 'InnoAI community members after an event in Shenzhen', altZh: 'InnoAI 深圳活动后的社区成员合照' },
+  { src: '/images/event-room.jpg', en: 'Builders in the room', zh: 'Builder 活动现场', altEn: 'A full room during a community builder event', altZh: '坐满参与者的社区活动现场' },
+  { src: '/images/event-founder-sharing.jpg', en: 'Project sharing', zh: '项目分享', altEn: 'A founder sharing a project', altZh: '活动中的项目分享' },
 ];
-
-const journey = [
-  {
-    place: 'Weihai No. 1 School',
-    location: 'Weihai · China',
-    image: '/images/journey-weihai.jpg',
-    alt: 'An evening street scene from Thomas’s years in Weihai',
-  },
-  {
-    place: 'Wodonga Senior Secondary College',
-    location: 'Victoria · Australia · 2023—2024',
-    image: '/images/journey-wodonga.jpg',
-    alt: 'Thomas with friends during his time in Wodonga, Australia',
-  },
-  {
-    place: 'Zunli',
-    location: 'Shenzhen · China',
-    image: '/images/journey-zunli.jpg',
-    alt: 'Thomas with classmates during his time at Zunli',
-  },
-  {
-    place: 'The University of Hong Kong',
-    location: 'Hong Kong · Now',
-    image: '/images/journey-hku.jpg',
-    alt: 'The University of Hong Kong sign photographed by Thomas',
-  },
-];
-
-const communityMoments = [
-  {
-    image: '/images/innoai-shenzhen-event.jpg',
-    alt: 'InnoAI community members after an event in Shenzhen',
-    caption: 'InnoAI · Shenzhen',
-    className: 'moment-main',
-  },
-  {
-    image: '/images/event-room.jpg',
-    alt: 'A full room during a community builder event',
-    caption: 'Bringing builders into the same room',
-    className: '',
-  },
-  {
-    image: '/images/event-founder-sharing.jpg',
-    alt: 'A young founder sharing the SurferGarage project',
-    caption: 'Project sharing',
-    className: '',
-  },
-  {
-    image: '/images/event-presentation.jpg',
-    alt: 'A presentation at an Aurora Club gathering',
-    caption: 'Learning in public',
-    className: '',
-  },
-  {
-    image: '/images/event-group.jpg',
-    alt: 'A group photo after a community gathering',
-    caption: 'The people behind the network',
-    className: '',
-  },
-];
-
-const indexItems = [
-  {
-    date: '2026.08',
-    title: 'SenseTime',
-    note: 'Local model deployment and AI data workflow automation.',
-    category: 'AI',
-    image: '/images/sensetime-shanghai.jpg',
-  },
-  {
-    date: '2026.08—09',
-    title: 'AIx Origin Summit',
-    note: 'Preparing a Hong Kong × Shenzhen AI builder programme.',
-    category: 'Community',
-    image: '/images/aix-origin-cover.png',
-  },
-  {
-    date: '2026.07',
-    title: 'Hejia CoolDown',
-    note: 'Mentoring a young team building a family communication prototype.',
-    category: 'Product',
-    image: '/images/hejia-cooldown-ui.png',
-  },
-  {
-    date: '2026.07',
-    title: 'AI Training Suit',
-    note: 'Developing an early wearable AI training concept.',
-    category: 'Experiment',
-    image: '/images/ai-training-suit.jpg',
-  },
-  {
-    date: '2026.04',
-    title: 'InnoAI',
-    note: 'Founded an AI Builder learning and practice community.',
-    category: 'Community',
-    image: '/images/innoai-shenzhen-event.jpg',
-  },
-  {
-    date: '2026.04',
-    title: 'TOS',
-    note: 'Built a local-first personal operating system.',
-    category: 'Product',
-    image: '/images/tos-focus.jpg',
-  },
-  {
-    date: '2026.04',
-    title: 'Trade Review',
-    note: 'Built a read-only journal for trading decisions and behavior.',
-    category: 'Product',
-    image: '/images/trade-review-pretrade.jpg',
-  },
-  {
-    date: '2026.03',
-    title: 'DINQ',
-    note: 'Product research and experience analysis during an internship.',
-    category: 'Research',
-    image: null,
-  },
-  {
-    date: '2025.11',
-    title: 'ColorBlock Network',
-    note: 'Explored professional identity and community infrastructure.',
-    category: 'Product',
-    image: null,
-  },
-  {
-    date: '2025.04',
-    title: 'Aurora Club',
-    note: 'Started a cross-region network for young founders and builders.',
-    category: 'Community',
-    image: '/images/aurora-club-official.jpg',
-  },
-];
-
-const indexCategories = ['All', 'AI', 'Product', 'Community', 'Research', 'Experiment'];
 
 export default function App() {
-  const [activeCategory, setActiveCategory] = useState('All');
-  const visibleIndexItems = activeCategory === 'All'
-    ? indexItems
-    : indexItems.filter((item) => item.category === activeCategory);
+  const [language, setLanguage] = useState<Language>('en');
+  const [selectedItem, setSelectedItem] = useState<ArchiveItem | null>(null);
+  const t = copy[language];
+
+  useEffect(() => {
+    document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN';
+    document.title = language === 'en' ? 'Thomas Lin — Builder & Community Founder' : 'Thomas Lin — Builder 与社区创始人';
+  }, [language]);
+  useEffect(() => {
+    if (!selectedItem) return;
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') setSelectedItem(null); };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [selectedItem]);
 
   return (
     <main>
       <header className="site-header">
-        <a className="wordmark" href="#top" aria-label="Thomas Lin, home">
-          TL<span>.</span>
-        </a>
-        <nav aria-label="Primary navigation">
-          <a href="#index">Index</a>
-          <a href="#work">Work</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-        </nav>
+        <a className="wordmark" href="#top" aria-label="Thomas Lin, home">TL<span>.</span></a>
+        <div className="header-actions">
+          <nav aria-label={language === 'en' ? 'Primary navigation' : '主导航'}>
+            <a href="#about">{t.nav[0]}</a><a href="#work">{t.nav[1]}</a><a href="#community">{t.nav[2]}</a><a href="#projects">{t.nav[3]}</a><a href="#contact">{t.nav[4]}</a>
+          </nav>
+          <button className="language-toggle" type="button" onClick={() => setLanguage(language === 'en' ? 'zh' : 'en')} aria-label={language === 'en' ? '切换为中文' : 'Switch to English'}>
+            <span className={language === 'en' ? 'active' : ''}>EN</span><i /><span className={language === 'zh' ? 'active' : ''}>中</span>
+          </button>
+        </div>
       </header>
 
       <section className="hero" id="top">
-        <div className="eyebrow"><span /> Hong Kong · Building now</div>
-        <h1>Thomas Lin</h1>
-        <div className="hero-bottom">
-          <p className="hero-role">AI-native product builder, founder and student at HKU.</p>
-          <div className="hero-intro">
-            <p>
-              I build products, communities and experiments at the intersection of
-              <strong> AI × Product × Entrepreneurship.</strong>
-            </p>
-            <a className="text-link" href="#work">Explore selected work <span aria-hidden="true">↘</span></a>
-          </div>
-        </div>
+        <div className="eyebrow"><span /> {t.status}</div><h1>Thomas Lin</h1>
+        <div className="hero-bottom"><p className="hero-role">{t.heroRole}</p><div className="hero-intro"><p>{t.heroLine}</p><a className="text-link" href="#archive">{t.explore} <span aria-hidden="true">↘</span></a></div></div>
       </section>
 
-      <section className="focus" aria-label="Current focus">
-        <p className="section-label">Currently</p>
-        <strong>SenseTime · InnoAI · Aurora Club</strong>
-        <span>Embedded software development intern · Founder · Student at HKU</span>
+      <section className="about section" id="about">
+        <div className="about-heading"><p className="section-label">{t.aboutLabel}</p><h2>{t.aboutTitle}</h2></div>
+        <div className="about-grid">
+          <figure className="portrait"><img src="/images/thomas-portrait.jpg" alt={language === 'en' ? 'Portrait of Thomas Lin' : 'Thomas Lin 个人照片'} width="1200" height="1600" /><figcaption>Thomas Lin · 林昱年</figcaption></figure>
+          <div className="about-copy">{t.about.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
+        </div>
+        <div className="current-strip"><span>{t.now}</span><strong>{t.nowValue}</strong><span>Shanghai / Hong Kong</span></div>
       </section>
 
-      <section className="section archive-index" id="index">
-        <div className="section-heading">
-          <div>
-            <p className="section-label">00 / Index</p>
-            <h2>A record of building</h2>
-          </div>
-          <p>Projects, communities, research and experiments—in time.</p>
-        </div>
-        <div className="index-layout">
-          <div className="index-controls" aria-label="Filter index">
-            {indexCategories.map((category) => (
-              <button
-                className={activeCategory === category ? 'active' : ''}
-                key={category}
-                type="button"
-                onClick={() => setActiveCategory(category)}
-                aria-pressed={activeCategory === category}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-          <div className="index-list" aria-live="polite">
-            {visibleIndexItems.map((item) => (
-              <article className="index-row" key={`${item.date}-${item.title}`} tabIndex={0}>
-                <time>{item.date}</time>
-                <h3>{item.title}</h3>
-                <p>{item.note}</p>
-                <span>{item.category}</span>
-                {item.image && <img src={item.image} alt="" aria-hidden="true" loading="lazy" />}
-              </article>
-            ))}
-          </div>
-        </div>
+      <section className="section archive" id="archive">
+        <div className="section-heading"><div><p className="section-label">{t.archiveLabel}</p><h2>{t.archiveTitle}</h2></div><p>{t.archiveNote}</p></div>
+        {categoryOrder.map((category, categoryIndex) => {
+          const categoryCopy = t.categories[category];
+          return <section className="category-block" id={category} key={category}>
+            <header className="category-heading"><span>0{categoryIndex + 1}</span><h3>{categoryCopy[0]}</h3><p>{categoryCopy[1]}</p></header>
+            <div className="archive-list">{items.filter((item) => item.category === category).map((item) =>
+              <article className="archive-row" key={item.id}>
+                <time>{item.period[language]}</time>
+                <div className="archive-identity"><h4>{item.title}</h4><p>{item.role[language]}</p>{item.stat && <strong>{item.stat[language]}</strong>}</div>
+                <p className="archive-summary">{item.summary[language]}</p>
+                {item.image ? <img src={item.image} alt={item.imageAlt?.[language] ?? ''} loading="lazy" /> : <div className="archive-monogram" aria-hidden="true">{item.title.slice(0, 2)}</div>}
+                <button type="button" className="detail-button" onClick={() => setSelectedItem(item)} aria-label={`${t.detail}: ${item.title}`}>{t.detail} <span aria-hidden="true">↗</span></button>
+              </article>)}</div>
+          </section>;
+        })}
       </section>
 
-      <section className="visual-journal" aria-label="Places shaping the work">
-        <figure className="visual-card visual-card-wide">
-          <img
-            src="/images/life-hku-community.jpg"
-            alt="Thomas and friends at The University of Hong Kong"
-            width="1800"
-            height="1350"
-          />
-          <figcaption><span>01</span> HKU · Learning with people</figcaption>
-        </figure>
-        <figure className="visual-card">
-          <img
-            src="/images/life-wodonga-class.jpg"
-            alt="Thomas with classmates at Wodonga Senior Secondary College"
-            width="1350"
-            height="1800"
-            loading="lazy"
-          />
-          <figcaption><span>02</span> Wodonga · Australia</figcaption>
-        </figure>
-        <figure className="visual-card">
-          <img
-            src="/images/life-community-gathering.jpg"
-            alt="Thomas with members after a community gathering"
-            width="1800"
-            height="1350"
-            loading="lazy"
-          />
-          <figcaption><span>03</span> Community · Built together</figcaption>
-        </figure>
-      </section>
-
-      <section className="section work" id="work">
-        <div className="section-heading">
-          <div>
-            <p className="section-label">01 / Selected work</p>
-            <h2>Things I&apos;m building</h2>
-          </div>
-          <p>Ventures, communities and builder programmes.</p>
-        </div>
-
-        <div className="featured-grid">
-          {featuredWork.map((project) => (
-            <article className={`featured-card ${project.tone}`} key={project.title}>
-              <div className="card-top">
-                <span>{project.number}</span>
-                <span>Selected work</span>
-              </div>
-              <div className={`project-mark ${project.image ? 'project-mark-image' : ''} ${project.wideImage ? 'project-mark-wide' : ''}`}>
-                {project.image ? (
-                  <img src={project.image} alt={project.alt} width="358" height="358" loading="lazy" />
-                ) : (
-                  <span aria-hidden="true">{project.title.slice(0, 2)}</span>
-                )}
-              </div>
-              <p className="project-meta">{project.meta}</p>
-              <h3>{project.title}</h3>
-              <p className="project-description">{project.description}</p>
-              <p className="project-detail">{project.detail}</p>
-            </article>
-          ))}
-        </div>
-
-        <div className="experiments">
-          <p className="section-label">More projects</p>
-          <div>
-            {projects.map((project) => (
-              <article className={`experiment ${project.image ? 'has-image' : ''}`} key={project.title}>
-                <div>
-                  <p>{project.label}</p>
-                  <h3>{project.title}</h3>
-                </div>
-                <p>{project.text}</p>
-                {project.image && (
-                  <img
-                    className="experiment-image"
-                    src={project.image}
-                    alt={
-                      project.title === 'AI Training Suit'
-                        ? 'AI Training Suit wearable movement guidance concept'
-                        : project.title === 'TOS'
-                          ? 'Thomas Operating System focus view'
-                          : project.title === 'Trade Review'
-                            ? 'Trade Review pre-trade checklist interface'
-                            : 'Hejia CoolDown communication plan prototype interface'
-                    }
-                    loading="lazy"
-                  />
-                )}
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section moments" aria-label="Community moments">
-        <div className="section-heading">
-          <div>
-            <p className="section-label">02 / In motion</p>
-            <h2>Communities are built in rooms</h2>
-          </div>
-          <p>Gatherings, conversations and people choosing to build together.</p>
-        </div>
-        <div className="moments-grid">
-          {communityMoments.map((moment) => (
-            <figure className={`moment ${moment.className}`} key={moment.image}>
-              <img src={moment.image} alt={moment.alt} loading="lazy" />
-              <figcaption>{moment.caption}</figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
-
-      <section className="section experience" id="experience">
-        <div className="section-heading">
-          <div>
-            <p className="section-label">03 / Experience</p>
-            <h2>Learning by doing</h2>
-          </div>
-          <p>Across industry, startups and communities.</p>
-        </div>
-        <div className="experience-list">
-          <article className="experience-with-image">
-            <p className="period">Aug 2026—Now</p>
-            <div><h3>SenseTime</h3><p>Embedded software development intern · Shanghai</p></div>
-            <p>Working on local model deployment and automating AI-generated data workflows for intelligent vehicle scenarios.</p>
-            <figure className="experience-image">
-              <img src="/images/sensetime-shanghai.jpg" alt="SenseTime Shanghai office atrium" loading="lazy" />
-              <figcaption>SenseTime · Shanghai</figcaption>
-            </figure>
-          </article>
-          <article>
-            <p className="period">Past</p>
-            <div><h3>ColorBlock Network</h3><p>Co-founder</p></div>
-            <p>Previously worked across product, early technology, business development and company building.</p>
-          </article>
-          <article>
-            <p className="period">Apr 2025—Now</p>
-            <div className="organization-with-logo">
-              <img src="/images/aurora-club-official.jpg" alt="Aurora Club official emblem" width="1000" height="1000" loading="lazy" />
-              <div><h3>Aurora Club</h3><p>Founder &amp; Chair</p></div>
-            </div>
-            <p>Building a 200+ member network across Shenzhen, Hong Kong, Shanghai, Hangzhou, Beijing and beyond.</p>
-          </article>
-        </div>
-      </section>
-
-      <section className="philosophy" id="about">
-        <p className="section-label">04 / How I work</p>
-        <p className="philosophy-lead">
-          Human judgment defines the <em>goal, taste and priorities.</em> AI expands what a small team can execute.
-        </p>
-        <div className="principles">
-          <div><span>01</span><p>Build before over-planning.</p></div>
-          <div><span>02</span><p>Use prototypes to make ideas testable.</p></div>
-          <div><span>03</span><p>Connect technology with product and distribution.</p></div>
-          <div><span>04</span><p>Design systems for people and agents to execute.</p></div>
-        </div>
-      </section>
-
-      <section className="section journey" aria-label="Education journey">
-        <div className="section-heading journey-heading">
-          <div>
-            <p className="section-label">05 / Path</p>
-            <h2>Weihai → Wodonga → Zunli → HKU</h2>
-          </div>
-          <p>A path shaped across China, Australia and Hong Kong.</p>
-        </div>
-        <div className="journey-grid">
-          {journey.map((chapter, index) => (
-            <figure className="journey-card" key={chapter.place}>
-              <img src={chapter.image} alt={chapter.alt} loading="lazy" />
-              <figcaption>
-                <span>0{index + 1}</span>
-                <strong>{chapter.place}</strong>
-                <small>{chapter.location}</small>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-        <div className="journey-note">
-          <p>
-            Before HKU, I studied across Weihai, Wodonga and Zunli—moving through different classrooms, cultures and communities.
-          </p>
-          <p>
-            I&apos;m early in the journey. This site is a living record of what I&apos;m building, learning and testing—not a list of inflated titles.
-          </p>
-        </div>
+      <section className="section moments">
+        <div className="section-heading"><div><p className="section-label">{t.photosLabel}</p><h2>{t.photosTitle}</h2></div><p>{t.photosNote}</p></div>
+        <div className="moments-grid">{photoMoments.map((moment, index) => <figure className={index === 0 ? 'moment moment-main' : 'moment'} key={moment.src}><img src={moment.src} alt={language === 'en' ? moment.altEn : moment.altZh} loading="lazy" /><figcaption><span>0{index + 1}</span>{language === 'en' ? moment.en : moment.zh}</figcaption></figure>)}</div>
       </section>
 
       <section className="contact" id="contact">
-        <p className="section-label">06 / Contact</p>
-        <h2>Let&apos;s build something useful.</h2>
-        <p>Interested in AI products, community infrastructure or early-stage experiments?</p>
-        <div className="contact-links">
-          <a href="mailto:thomaslin070217@gmail.com">Email ↗</a>
-          <a href="https://github.com/ThomasLin070217" target="_blank" rel="noreferrer">GitHub ↗</a>
-          <span>Xiaohongshu · 2546938708</span>
-        </div>
+        <p className="section-label">{t.contactLabel}</p><h2>{t.contactTitle}</h2><p>{t.contactBody}</p>
+        <div className="contact-links"><a href="mailto:thomaslin070217@gmail.com">Email ↗</a><a href="https://github.com/ThomasLin070217" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://hk.linkedin.com/in/yunianlin" target="_blank" rel="noreferrer">LinkedIn ↗</a><span>小红书 · 2546938708</span></div>
       </section>
+      <footer><p>Thomas Lin · 林昱年 · 2026</p><a href="#top">{t.back} ↑</a></footer>
 
-      <footer>
-        <p>Thomas Lin · 林昱年</p>
-        <a href="#top">Back to top ↑</a>
-      </footer>
+      {selectedItem && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedItem(null); }}>
+        <section className="detail-modal" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+          <button className="modal-close" type="button" onClick={() => setSelectedItem(null)} aria-label={t.close}>×</button>
+          <div className="modal-meta"><span>{t.categories[selectedItem.category][0]}</span><time>{selectedItem.period[language]}</time></div>
+          {selectedItem.image && <img className="modal-image" src={selectedItem.image} alt={selectedItem.imageAlt?.[language] ?? ''} />}
+          <p className="modal-role">{selectedItem.role[language]}</p><h2 id="detail-title">{selectedItem.title}</h2><p className="modal-summary">{selectedItem.summary[language]}</p>
+          <div className="modal-evidence"><p className="section-label">{t.evidence}</p><ul>{selectedItem.details.map((detail) => <li key={detail[language]}>{detail[language]}</li>)}</ul></div>
+          {selectedItem.link && <a className="modal-link" href={selectedItem.link} target="_blank" rel="noreferrer">{selectedItem.linkLabel?.[language] ?? t.visit} ↗</a>}
+        </section>
+      </div>}
     </main>
   );
 }
