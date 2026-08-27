@@ -11,17 +11,17 @@ type ArchiveItem = {
 
 const copy = {
   en: {
-    nav: ['About', 'Work', 'Community', 'Projects', 'Contact'], status: 'Hong Kong · Building now',
+    nav: ['About', 'Education', 'Work', 'Community', 'Projects', 'Contact'], status: 'Shanghai ↔ Hong Kong · Building now',
     heroRole: 'Student · Builder · Community Founder',
     heroLine: 'I build at the intersection of AI, products, and entrepreneurship.', explore: 'Explore the archive',
     aboutLabel: '01 / About', aboutTitle: 'Most of what I learn happens through building.',
     about: [
-      "I'm Thomas Lin, a student, builder, and community founder working at the intersection of AI, products, and entrepreneurship.",
+      "I'm Yunian Lin — I also go by Thomas. I'm a student, builder, and community founder working at the intersection of AI, products, and entrepreneurship.",
       'I study AI and Data Science at the University of Hong Kong, but most of what I learn happens through building. From experimenting with multimodal AI at SenseTime, to co-founding an early-stage AI startup, to building InnoAI and Aurora into communities for young builders and founders, I enjoy turning ambiguous ideas into things that can actually be tested, used, and scaled.',
       "I'm especially interested in how AI changes the way we build products, organize teams, and start companies — and I try to stay close to that change by building alongside it.",
     ],
     now: 'Currently', nowValue: 'SenseTime · InnoAI · Aurora · HKU', archiveLabel: '02 / Archive',
-    archiveTitle: 'A clearer record of the work', archiveNote: 'Education, work, communities and projects—kept distinct, connected by building.',
+    archiveTitle: 'A record of how I learn and build', archiveNote: 'Education, work, communities and projects—kept distinct, connected by building.',
     categories: {
       education: ['Education', 'Where I learned across different systems and cultures.'],
       work: ['Work', 'Industry, internships and an early venture.'],
@@ -35,16 +35,16 @@ const copy = {
     back: 'Back to top',
   },
   zh: {
-    nav: ['关于', '工作', '社区', '项目', '联系'], status: '香港 · 持续构建中',
+    nav: ['关于', '教育', '工作', '社区', '项目', '联系'], status: '上海 ↔ 香港 · 持续构建中',
     heroRole: '学生 · Builder · 社区创始人', heroLine: '我在人工智能、产品与创业的交叉地带持续构建。', explore: '查看经历档案',
     aboutLabel: '01 / 关于', aboutTitle: '真正塑造我的学习，大多发生在持续构建的过程中。',
     about: [
-      '我是 Thomas Lin，一名学生、Builder 和社区创始人，长期探索人工智能、产品与创业的交叉地带。',
+      '我是林昱年（Yunian Lin），也可以叫我 Thomas。我是一名学生、Builder 和社区创始人，长期探索人工智能、产品与创业的交叉地带。',
       '我在香港大学学习人工智能与数据科学，但真正塑造我的学习，大多发生在持续构建的过程中。从在商汤探索多模态 AI，到参与共同创办早期 AI 创业项目，再到把 InnoAI 和 Aurora 建设成年轻 Builder 与创业者的社区，我喜欢把模糊的想法变成能够被测试、使用并进一步放大的东西。',
       '我尤其关注 AI 如何改变产品构建、团队组织与公司创立的方式。我希望通过持续参与和亲手构建，始终贴近这种变化。',
     ],
     now: '目前', nowValue: '商汤 · InnoAI · Aurora · 香港大学', archiveLabel: '02 / 经历档案',
-    archiveTitle: '把做过的事情讲清楚', archiveNote: '教育、工作、社区与项目彼此独立，又通过持续构建相互连接。',
+    archiveTitle: '我如何学习，又如何构建', archiveNote: '教育、工作、社区与项目彼此独立，又通过持续构建相互连接。',
     categories: {
       education: ['教育', '在不同教育体系与文化中学习。'], work: ['工作', '产业实习、产品研究与一次早期创业实践。'],
       community: ['社区', '让年轻 Builder 与创业者真正连接并一起行动。'], projects: ['项目', '有实际内容可展示的产品与实验。'],
@@ -62,21 +62,13 @@ const items: ArchiveItem[] = [
     summary: { en: 'Studying AI and Data Science while building products and communities beyond the classroom.', zh: '学习人工智能与数据科学，同时把课堂之外的时间用于产品、社区与真实项目。' },
     details: [{ en: 'Combining technical study with hands-on work across AI products, early ventures and builder communities.', zh: '把技术学习与 AI 产品、早期创业和 Builder 社区的实际工作连接起来。' }],
     image: '/images/journey-hku.jpg', imageAlt: { en: 'The University of Hong Kong', zh: '香港大学' } },
-  { id: 'wodonga', category: 'education', title: 'Wodonga Senior Secondary College',
-    role: { en: 'Senior secondary education', zh: '高中阶段学习' }, period: { en: '2023—2024 · Australia', zh: '2023—2024 · 澳大利亚' },
-    summary: { en: 'An international chapter that shaped how I adapt, communicate and work across cultures.', zh: '一段跨文化学习经历，塑造了我适应环境、沟通协作与理解不同体系的方式。' },
-    details: [{ en: 'Part of a broader path through Weihai, Wodonga, Shenzhen and Hong Kong.', zh: '这段经历也是威海、Wodonga、深圳与香港成长路径中的重要一站。' }],
-    image: '/images/journey-wodonga.jpg', imageAlt: { en: 'Thomas during his time in Wodonga', zh: 'Thomas 在 Wodonga 学习期间' } },
-  { id: 'zunli', category: 'education', title: 'Zunli',
-    role: { en: 'Secondary education', zh: '中学阶段学习' }, period: { en: 'Before HKU · Shenzhen', zh: '港大之前 · 深圳' },
-    summary: { en: 'A return to Shenzhen before university, connecting international study with the next stage in Hong Kong.', zh: '大学前回到深圳，把海外学习经历与下一阶段的香港生活连接起来。' },
-    details: [{ en: 'One chapter in a non-linear education path across different cities and learning environments.', zh: '这是跨越不同城市与学习环境的非线性教育路径中的一段。' }],
-    image: '/images/journey-zunli.jpg', imageAlt: { en: 'Thomas with classmates at Zunli', zh: 'Thomas 与 Zunli 同学' } },
-  { id: 'weihai', category: 'education', title: 'Weihai No. 1 School',
-    role: { en: 'Earlier education', zh: '早期教育经历' }, period: { en: 'Earlier · Weihai', zh: '早期 · 威海' },
-    summary: { en: 'The starting point of a path that later moved through Australia, Shenzhen and Hong Kong.', zh: '这段经历是后来前往澳大利亚、深圳与香港之前的起点。' },
-    details: [{ en: 'Kept here as context for the journey, without overstating an early school experience as professional work.', zh: '它为成长路径提供背景，但不会被夸大成职业成就。' }],
-    image: '/images/journey-weihai.jpg', imageAlt: { en: 'A scene from Thomas’s years in Weihai', zh: 'Thomas 在威海时期的城市记忆' } },
+  { id: 'education-journey', category: 'education', title: 'An International Education Path',
+    role: { en: 'Weihai · Wodonga · Shenzhen', zh: '威海 · Wodonga · 深圳' }, period: { en: 'Before 2025', zh: '2025 年以前' },
+    summary: { en: 'Moving through different cities and education systems shaped how I adapt, communicate and work across cultures.', zh: '在不同城市与教育体系中的学习经历，塑造了我适应环境、跨文化沟通和协作的方式。' },
+    details: [
+      { en: 'My earlier education began in Weihai, continued at Wodonga Senior Secondary College in Australia, and returned to Shenzhen at Zunli before HKU.', zh: '我的早期教育从威海开始，随后在澳大利亚 Wodonga Senior Secondary College 学习，并在进入港大前回到深圳的 Zunli。' },
+      { en: 'Presented as one formative journey so the portfolio keeps its emphasis on current work, communities and products.', zh: '这些经历被整理为一段完整的成长路径，让作品集把主要注意力留给当下的工作、社区与产品。' }],
+    image: '/images/journey-wodonga.jpg', imageAlt: { en: 'Yunian during his education in Wodonga', zh: '昱年在 Wodonga 学习期间' } },
   { id: 'sensetime', category: 'work', title: 'SenseTime',
     role: { en: 'Embedded Software Development Intern', zh: '嵌入式软件开发实习生' }, period: { en: 'Aug 2026—Now · Shanghai', zh: '2026.08—至今 · 上海' },
     summary: { en: 'Working on local model deployment and automating AI-generated data workflows for intelligent vehicle scenarios.', zh: '参与本地模型部署，并推动智能汽车场景中的 AI 生产数据流程自动化。' },
@@ -153,6 +145,7 @@ const items: ArchiveItem[] = [
 ];
 
 const categoryOrder: Category[] = ['education', 'work', 'community', 'projects'];
+const projectOrder = ['token-roi', 'trade-review', 'tos', 'hejia', 'ai-training-suit'];
 const photoMoments = [
   { src: '/images/innoai-shenzhen-event.jpg', en: 'InnoAI · Shenzhen', zh: 'InnoAI · 深圳', altEn: 'InnoAI community members after an event in Shenzhen', altZh: 'InnoAI 深圳活动后的社区成员合照' },
   { src: '/images/event-room.jpg', en: 'Builders in the room', zh: 'Builder 活动现场', altEn: 'A full room during a community builder event', altZh: '坐满参与者的社区活动现场' },
@@ -166,22 +159,27 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN';
-    document.title = language === 'en' ? 'Thomas Lin — Builder & Community Founder' : 'Thomas Lin — Builder 与社区创始人';
+    document.title = language === 'en' ? 'Yunian Lin — Builder & Community Founder' : '林昱年 Yunian Lin — Builder 与社区创始人';
   }, [language]);
   useEffect(() => {
     if (!selectedItem) return;
     const closeOnEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') setSelectedItem(null); };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', closeOnEscape);
-    return () => window.removeEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
   }, [selectedItem]);
 
   return (
     <main>
       <header className="site-header">
-        <a className="wordmark" href="#top" aria-label="Thomas Lin, home">TL<span>.</span></a>
+        <a className="wordmark" href="#top" aria-label="Yunian Lin, home">YL<span>.</span></a>
         <div className="header-actions">
           <nav aria-label={language === 'en' ? 'Primary navigation' : '主导航'}>
-            <a href="#about">{t.nav[0]}</a><a href="#work">{t.nav[1]}</a><a href="#community">{t.nav[2]}</a><a href="#projects">{t.nav[3]}</a><a href="#contact">{t.nav[4]}</a>
+            <a href="#about">{t.nav[0]}</a><a href="#education">{t.nav[1]}</a><a href="#work">{t.nav[2]}</a><a href="#community">{t.nav[3]}</a><a href="#projects">{t.nav[4]}</a><a href="#contact">{t.nav[5]}</a>
           </nav>
           <button className="language-toggle" type="button" onClick={() => setLanguage(language === 'en' ? 'zh' : 'en')} aria-label={language === 'en' ? '切换为中文' : 'Switch to English'}>
             <span className={language === 'en' ? 'active' : ''}>EN</span><i /><span className={language === 'zh' ? 'active' : ''}>中</span>
@@ -190,14 +188,14 @@ export default function App() {
       </header>
 
       <section className="hero" id="top">
-        <div className="eyebrow"><span /> {t.status}</div><h1>Thomas Lin</h1>
+        <div className="eyebrow"><span /> {t.status}</div><h1>Yunian Lin</h1>
         <div className="hero-bottom"><p className="hero-role">{t.heroRole}</p><div className="hero-intro"><p>{t.heroLine}</p><a className="text-link" href="#archive">{t.explore} <span aria-hidden="true">↘</span></a></div></div>
       </section>
 
       <section className="about section" id="about">
         <div className="about-heading"><p className="section-label">{t.aboutLabel}</p><h2>{t.aboutTitle}</h2></div>
         <div className="about-grid">
-          <figure className="portrait"><img src="/images/thomas-portrait.jpg" alt={language === 'en' ? 'Portrait of Thomas Lin' : 'Thomas Lin 个人照片'} width="1200" height="1600" /><figcaption>Thomas Lin · 林昱年</figcaption></figure>
+          <figure className="portrait"><div className="portrait-frame"><img src="/images/thomas-portrait.jpg" alt={language === 'en' ? 'Portrait of Yunian Lin' : '林昱年个人照片'} width="1200" height="1600" /></div><figcaption>Yunian Lin · 林昱年 <span>Also Thomas</span></figcaption></figure>
           <div className="about-copy">{t.about.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
         </div>
         <div className="current-strip"><span>{t.now}</span><strong>{t.nowValue}</strong><span>Shanghai / Hong Kong</span></div>
@@ -209,7 +207,7 @@ export default function App() {
           const categoryCopy = t.categories[category];
           return <section className="category-block" id={category} key={category}>
             <header className="category-heading"><span>0{categoryIndex + 1}</span><h3>{categoryCopy[0]}</h3><p>{categoryCopy[1]}</p></header>
-            <div className="archive-list">{items.filter((item) => item.category === category).map((item) =>
+            <div className="archive-list">{items.filter((item) => item.category === category).sort((a, b) => category === 'projects' ? projectOrder.indexOf(a.id) - projectOrder.indexOf(b.id) : 0).map((item) =>
               <article className="archive-row" key={item.id}>
                 <time>{item.period[language]}</time>
                 <div className="archive-identity"><h4>{item.title}</h4><p>{item.role[language]}</p>{item.stat && <strong>{item.stat[language]}</strong>}</div>
@@ -230,7 +228,7 @@ export default function App() {
         <p className="section-label">{t.contactLabel}</p><h2>{t.contactTitle}</h2><p>{t.contactBody}</p>
         <div className="contact-links"><a href="mailto:thomaslin070217@gmail.com">Email ↗</a><a href="https://github.com/ThomasLin070217" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://hk.linkedin.com/in/yunianlin" target="_blank" rel="noreferrer">LinkedIn ↗</a><span>小红书 · 2546938708</span></div>
       </section>
-      <footer><p>Thomas Lin · 林昱年 · 2026</p><a href="#top">{t.back} ↑</a></footer>
+      <footer><p>Yunian Lin · 林昱年 · 2026</p><a href="#top">{t.back} ↑</a></footer>
 
       {selectedItem && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedItem(null); }}>
         <section className="detail-modal" role="dialog" aria-modal="true" aria-labelledby="detail-title">
